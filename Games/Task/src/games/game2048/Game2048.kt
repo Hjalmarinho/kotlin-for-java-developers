@@ -55,17 +55,28 @@ fun GameBoard<Int?>.addNewValue(initializer: Game2048Initializer<Int>) {
  * in the same manner as in the function 'moveAndMergeEqual'.
  * Return 'true' if the values were moved and 'false' otherwise.
  */
-fun GameBoard<Int?>.moveValuesInRowOrColumn(rowOrColumn: List<Cell>): Boolean {
-    TODO()
+internal fun GameBoard<Int?>.moveValuesInRowOrColumn(rowOrColumn: List<Cell>): Boolean {
+    val oldValues = rowOrColumn.map { get(it) }
+    val newValues = oldValues
+            .moveAndMergeEqual { it * 2 }
+    rowOrColumn.forEachIndexed { index, cell ->
+        set(cell, if (newValues.size > index) newValues[index] else null)
+    }
+    return oldValues.filterNotNull().any() && newValues != oldValues
 }
 
 /*
  * Update the values stored in a board,
  * so that the values were "moved" to the specified direction
  * following the rules of the 2048 game .
- * Use the 'moveValuesInRowOrColumn' function above.
+ * Use the 'moveValuesInRowOrColumn' function above.H
  * Return 'true' if the values were moved and 'false' otherwise.
  */
-fun GameBoard<Int?>.moveValues(direction: Direction): Boolean {
-    TODO()
+internal fun GameBoard<Int?>.moveValues(direction: Direction): Boolean {
+    return when (direction) {
+        Direction.DOWN -> (1..width).toList().map {  moveValuesInRowOrColumn(getColumn(4 downTo 1, it)) }.any { it }
+        Direction.UP -> (1..width).toList().map { moveValuesInRowOrColumn(getColumn(1..4, it)) }.any{ it }
+        Direction.RIGHT -> (1..width).toList().map { moveValuesInRowOrColumn(getRow(it, 4 downTo 1)) }.any{ it }
+        Direction.LEFT -> (1..width).toList().map { moveValuesInRowOrColumn(getRow(it, 1..4)) }.any{ it }
+    }
 }

@@ -12,20 +12,20 @@ class TestMoveValuesInRowOrColumn : AbstractTestGameWithSmallNumbers() {
     fun testRow() = testMoveInRowOrColumn({ it.getRow(1, 1..4) }, "Row(1, 1..4)",
             "24-- 2--- ---- 4---")
 
-//    @Test
+    @Test
     fun testRowReversed() = testMoveInRowOrColumn({ it.getRow(1, 4 downTo 1) }, "Row(1, 4 downTo 1)",
             "--24 2--- ---- 4---")
 
 
-//    @Test
+    @Test
     fun testColumn() = testMoveInRowOrColumn({ it.getColumn(1..4, 1) }, "Column(1..4, 1)",
             "22-4 4--- ---- ----")
 
-//    @Test
+    @Test
     fun testColumnReversed() = testMoveInRowOrColumn({ it.getColumn(4 downTo 1, 1) }, "Column(4 downTo 1, 1)",
             "-2-4 ---- 2--- 4---")
 
-//    @Test
+    @Test
     fun testNoMove() = testMoveInRowOrColumn({ it.getRow(1, 1..4) }, "Row(1, 1..4)",
             "2424 ---- ---- ----", "2424 ---- ---- ----", expectedMove = false)
 

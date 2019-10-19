@@ -29,14 +29,15 @@ class GameBoardImpl<T>(override val width: Int) : GameBoard<T> {
         for (i in 1..width)
             for (j in 1..width)
                 cells.add(createCell(i, j))
-        return cells    }
+        return cells
+    }
 
     override fun getRow(i: Int, jRange: IntProgression): List<Cell> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return jRange.map { getCell(i, it) }
     }
 
     override fun getColumn(iRange: IntProgression, j: Int): List<Cell> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return iRange.map { getCell(it, j) }
     }
 
     override fun Cell.getNeighbour(direction: Direction): Cell? {
